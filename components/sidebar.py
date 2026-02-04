@@ -49,7 +49,8 @@ def render_sidebar():
             "Go to:",
             options=list(config.PAGE_TITLES.keys()),
             format_func=lambda x: config.PAGE_TITLES[x],
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            key="page_navigation"
         )
         
         st.markdown("---")
