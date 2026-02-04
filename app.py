@@ -56,38 +56,44 @@ def load_custom_css():
 
 
 def main():
-    """Main application function."""
+    """Main application function with error handling."""
     # Load custom CSS
     load_custom_css()
     
     # Render sidebar and get selected page
     selected_page = render_sidebar()
     
-    # Route to the appropriate page
-    if selected_page == "Dashboard":
-        render_dashboard_page()
+    # Route to the appropriate page with error handling
+    try:
+        if selected_page == "Dashboard":
+            render_dashboard_page()
+        
+        elif selected_page == "Global Trends":
+            render_global_trends_page()
+        
+        elif selected_page == "Rural vs Urban":
+            render_rural_vs_urban_page()
+        
+        elif selected_page == "Analysis":
+            render_analysis_page()
+        
+        elif selected_page == "Visualization":
+            render_visualization_page()
+        
+        elif selected_page == "Reports":
+            render_reports_page()
+        
+        elif selected_page == "Learn More":
+            render_learn_more_page()
+        
+        else:
+            # Default to dashboard
+            render_dashboard_page()
     
-    elif selected_page == "Global Trends":
-        render_global_trends_page()
-    
-    elif selected_page == "Rural vs Urban":
-        render_rural_vs_urban_page()
-    
-    elif selected_page == "Analysis":
-        render_analysis_page()
-    
-    elif selected_page == "Visualization":
-        render_visualization_page()
-    
-    elif selected_page == "Reports":
-        render_reports_page()
-    
-    elif selected_page == "Learn More":
-        render_learn_more_page()
-    
-    else:
-        # Default to dashboard
-        render_dashboard_page()
+    except Exception as e:
+        st.error(f"Error loading page '{selected_page}': {str(e)}")
+        st.exception(e)
+        st.info("Please try refreshing the page or selecting a different page from the sidebar.")
 
 
 if __name__ == "__main__":
