@@ -1,0 +1,213 @@
+/* Poverty Dashboard Custom Styles */
+
+/* Global Styles */
+.main {
+    background-color: #f8f9fa;
+    padding: 2rem;
+}
+
+/* Metric Cards */
+.stMetric {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stMetric:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Headers */
+h1 {
+    color: #1f77b4;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    color: #34495e;
+    font-weight: 500;
+}
+
+/* Sidebar */
+.css-1d391kg {
+    background-color: #2c3e50;
+}
+
+.css-1d391kg .stRadio > label {
+    color: white;
+}
+
+/* Buttons */
+.stButton > button {
+    background-color: #1f77b4;
+    color: white;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    border: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.stButton > button:hover {
+    background-color: #145a8a;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* DataFrames */
+.dataframe {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Plotly Charts */
+.js-plotly-plot {
+    border-radius: 12px;
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Expander */
+.streamlit-expanderHeader {
+    background-color: white;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Info/Warning/Success/Error Boxes */
+.stAlert {
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px 8px 0 0;
+    padding: 12px 24px;
+    background-color: white;
+    font-weight: 500;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: #1f77b4;
+    color: white;
+}
+
+/* Selectbox and Multiselect */
+.stSelectbox, .stMultiSelect {
+    background-color: white;
+    border-radius: 8px;
+}
+
+/* Download Button */
+.stDownloadButton > button {
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    border: none;
+    font-weight: 500;
+}
+
+.stDownloadButton > button:hover {
+    background-color: #27ae60;
+}
+
+/* Custom Card Styling */
+.custom-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .main {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Table Styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th {
+    background-color: #1f77b4;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
