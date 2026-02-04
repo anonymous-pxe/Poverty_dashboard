@@ -12,7 +12,12 @@ from utils.stats import (
     perform_regression,
     calculate_trend
 )
-from utils.visualization import create_heatmap, create_scatter_plot
+from utils.visualization import (
+    create_heatmap,
+    create_scatter_plot,
+    create_line_chart,
+    create_histogram
+)
 import config
 
 
