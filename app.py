@@ -63,37 +63,56 @@ def main():
     # Render sidebar and get selected page
     selected_page = render_sidebar()
     
+    # Debug: Show which page was selected
+    # st.write(f"DEBUG: Selected page = {selected_page}")
+    
     # Route to the appropriate page with error handling
     try:
         if selected_page == "Dashboard":
+            st.write("")  # Ensure something renders
             render_dashboard_page()
         
         elif selected_page == "Global Trends":
+            st.write("")  # Ensure something renders
             render_global_trends_page()
         
         elif selected_page == "Rural vs Urban":
+            st.write("")  # Ensure something renders
             render_rural_vs_urban_page()
         
         elif selected_page == "Analysis":
+            st.write("")  # Ensure something renders
             render_analysis_page()
         
         elif selected_page == "Visualization":
+            st.write("")  # Ensure something renders
             render_visualization_page()
         
         elif selected_page == "Reports":
+            st.write("")  # Ensure something renders
             render_reports_page()
         
         elif selected_page == "Learn More":
+            st.write("")  # Ensure something renders
             render_learn_more_page()
         
         else:
             # Default to dashboard
+            st.write("")  # Ensure something renders
             render_dashboard_page()
     
     except Exception as e:
-        st.error(f"Error loading page '{selected_page}': {str(e)}")
+        st.error(f"❌ Error loading page '{selected_page}'")
+        st.error(f"Error message: {str(e)}")
         st.exception(e)
-        st.info("Please try refreshing the page or selecting a different page from the sidebar.")
+        st.info("💡 Try refreshing the page or selecting a different page from the sidebar.")
+        
+        # Show a basic page anyway
+        st.markdown("---")
+        st.subheader("📋 Available Pages")
+        st.write("Use the sidebar to navigate:")
+        for page_key, page_title in config.PAGE_TITLES.items():
+            st.write(f"- {page_title}")
 
 
 if __name__ == "__main__":
