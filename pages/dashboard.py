@@ -5,7 +5,6 @@ Dashboard page - Overview with KPIs and highlights.
 import streamlit as st
 import pandas as pd
 from data.data_loader import load_india_data, load_global_data, get_latest_year_data
-from components.metrics import render_kpi_cards, render_colored_metric
 from components.tables import render_top_bottom_table
 from utils.visualization import create_line_chart, create_bar_chart
 import config
@@ -52,29 +51,39 @@ def render_dashboard_page():
     else:
         poverty_change = 0
     
-    india_metrics = {
-        'Avg Poverty Rate': {
-            'value': f"{avg_poverty:.2f}%",
-            'delta': f"{poverty_change:.2f}%",
-            'delta_color': 'inverse',
-            'help': 'Average poverty rate across all states'
-        },
-        'Avg Literacy Rate': {
-            'value': f"{avg_literacy:.2f}%",
-            'help': 'Average literacy rate across all states'
-        },
-        'Avg Unemployment': {
-            'value': f"{avg_unemployment:.2f}%",
-            'delta_color': 'inverse',
-            'help': 'Average unemployment rate across all states'
-        },
-        'Total States': {
-            'value': total_states,
-            'help': 'Number of states in the dataset'
-        }
-    }
+    # Use native Streamlit metrics
+    col1, col2, col3, col4 = st.columns(4)
     
-    render_kpi_cards(india_metrics)
+    with col1:
+        st.metric(
+            label="Avg Poverty Rate",
+            value=f"{avg_poverty:.2f}%",
+            delta=f"{poverty_change:.2f}%",
+            delta_color='inverse',
+            help='Average poverty rate across all states'
+        )
+    
+    with col2:
+        st.metric(
+            label="Avg Literacy Rate",
+            value=f"{avg_literacy:.2f}%",
+            help='Average literacy rate across all states'
+        )
+    
+    with col3:
+        st.metric(
+            label="Avg Unemployment",
+            value=f"{avg_unemployment:.2f}%",
+            delta_color='inverse',
+            help='Average unemployment rate across all states'
+        )
+    
+    with col4:
+        st.metric(
+            label="Total States",
+            value=total_states,
+            help='Number of states in the dataset'
+        )
     
     # Global KPIs
     st.markdown("---")
@@ -83,19 +92,15 @@ def render_dashboard_page():
     col1, col2 = st.columns(2)
     
     with col1:
-        render_colored_metric(
-            label="Countries Tracked",
-            value=latest_global['country'].nunique(),
-            color='blue',
-            icon='🌐'
+        st.metric(
+            label="🌐 Countries Tracked",
+            value=latest_global['country'].nunique()
         )
     
     with col2:
-        render_colored_metric(
-            label="Avg Global Poverty Rate",
-            value=f"{latest_global['value'].mean():.2f}%",
-            color='orange',
-            icon='📊'
+        st.metric(
+            label="📊 Avg Global Poverty Rate",
+            value=f"{latest_global['value'].mean():.2f}%"
         )
     
     # Trends Section
