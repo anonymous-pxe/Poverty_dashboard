@@ -64,7 +64,7 @@ def main():
     selected_page = render_sidebar()
     
     # Debug: Show which page was selected
-    # st.write(f"DEBUG: Selected page = {selected_page}")
+    st.write(f"DEBUG: Selected page = {selected_page}")
     
     # Route to the appropriate page with error handling
     try:
