@@ -24,7 +24,7 @@ A comprehensive data analysis and visualization platform for exploring poverty i
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Poverty_dashboard.git
+git clone https://github.com/anonymous-pxe/Poverty_dashboard.git
 cd Poverty_dashboard
 ```
 
