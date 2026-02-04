@@ -16,12 +16,13 @@ from .india_poverty_api import (
 
 
 @st.cache_data(ttl=config.CACHE_TTL)
-def load_global_data(indicator: str, 
+def load_global_data(indicator: str,
                      country_codes: Optional[List[str]] = None,
                      start_year: Optional[int] = None,
                      end_year: Optional[int] = None) -> pd.DataFrame:
     """
     Load global poverty data with caching.
+    Automatically adds year-over-year change columns.
     
     Args:
         indicator: World Bank indicator code
@@ -30,14 +31,22 @@ def load_global_data(indicator: str,
         end_year: Ending year
     
     Returns:
-        pd.DataFrame: Cached global poverty data
+        pd.DataFrame: Cached global poverty data with yoy_change and yoy_pct_change columns
     """
-    return fetch_world_bank_data(
+    data = fetch_world_bank_data(
         indicator=indicator,
         country_codes=country_codes,
         start_year=start_year,
         end_year=end_year
     )
+    
+    # Add year-over-year change columns automatically
+    if not data.empty and 'country' in data.columns and 'year' in data.columns and 'value' in data.columns:
+        data = data.sort_values(['country', 'year'])
+        data['yoy_change'] = data.groupby('country')['value'].diff()
+        data['yoy_pct_change'] = data.groupby('country')['value'].pct_change() * 100
+    
+    return data
 
 
 @st.cache_data(ttl=config.CACHE_TTL)

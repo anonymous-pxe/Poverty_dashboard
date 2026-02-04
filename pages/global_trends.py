@@ -141,15 +141,8 @@ def render_global_trends_page():
         st.markdown("---")
         st.subheader("Year-over-Year Changes")
         
-        # Calculate changes
-        from data.preprocess import calculate_growth_rate
-        growth_data = calculate_growth_rate(
-            df=global_data,
-            value_col='value',
-            group_col='country'
-        )
-        
-        latest_growth = growth_data[growth_data['year'] == latest_year][
+        # Data already has yoy_change and yoy_pct_change columns from load_global_data
+        latest_growth = global_data[global_data['year'] == latest_year][
             ['country', 'value', 'yoy_change', 'yoy_pct_change']
         ].round(2)
         
@@ -198,10 +191,10 @@ def render_global_trends_page():
         """)
         
         # Most improved
-        if 'yoy_pct_change' in growth_data.columns:
-            latest_growth_complete = growth_data[
-                (growth_data['year'] == latest_year) & 
-                (growth_data['yoy_pct_change'].notna())
+        if 'yoy_pct_change' in global_data.columns:
+            latest_growth_complete = global_data[
+                (global_data['year'] == latest_year) &
+                (global_data['yoy_pct_change'].notna())
             ]
             if not latest_growth_complete.empty:
                 most_improved_idx = latest_growth_complete['yoy_pct_change'].idxmin()
@@ -209,7 +202,7 @@ def render_global_trends_page():
                 improvement = latest_growth_complete.loc[most_improved_idx, 'yoy_pct_change']
                 
                 st.info(f"""
-                **Most Improved:** {most_improved}  
+                **Most Improved:** {most_improved}
                 Change: {improvement:.2f}%
                 """)
     
