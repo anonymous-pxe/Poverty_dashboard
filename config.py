@@ -4,31 +4,41 @@ Contains constants, indicator lists, and app settings.
 Supports both local development and Streamlit Cloud deployment.
 """
 
-import streamlit as st
-
 # App Configuration
 APP_TITLE = "🌍 Poverty Dashboard"
 APP_ICON = "🌍"
 PAGE_LAYOUT = "wide"
 SIDEBAR_STATE = "expanded"
 
-# Data Sources - Use Streamlit secrets if available, otherwise use defaults
-try:
-    # Try to load from Streamlit secrets (for cloud deployment)
-    WORLD_BANK_API_URL = st.secrets.get("api", {}).get("world_bank_api_url", "https://api.worldbank.org/v2")
-    INDIA_POVERTY_API_URL = st.secrets.get("api", {}).get("india_poverty_api_url", "https://loadqa.ndapapi.com/v1/openapi")
-    INDIA_POVERTY_API_KEY = st.secrets.get("api", {}).get("india_poverty_api_key", "gAAAAABpg20RfAwUAEq8ibudPDW7_cLCZrmUjpOVRH0W4rwwewM09vTDi1LxAXKkpRr0DaS7GES5iu9XzDOeGk-FEpMJgIL06oZ1WTR9HCrw6cmJbJvXKVKlo3VaaCkwfSaIimDLObK9RX3kl6RmWWEF88VvEpKj5ZxO-JoQzSWp2go-_rexphfoj49OMGDEVPAG25wIMFUW")
-except (AttributeError, FileNotFoundError):
-    # Fallback for local development (when secrets.toml doesn't exist)
-    WORLD_BANK_API_URL = "https://api.worldbank.org/v2"
-    INDIA_POVERTY_API_URL = "https://loadqa.ndapapi.com/v1/openapi"
-    INDIA_POVERTY_API_KEY = "gAAAAABpg20RfAwUAEq8ibudPDW7_cLCZrmUjpOVRH0W4rwwewM09vTDi1LxAXKkpRr0DaS7GES5iu9XzDOeGk-FEpMJgIL06oZ1WTR9HCrw6cmJbJvXKVKlo3VaaCkwfSaIimDLObK9RX3kl6RmWWEF88VvEpKj5ZxO-JoQzSWp2go-_rexphfoj49OMGDEVPAG25wIMFUW"
+# Data Sources - Default values (will be overridden by secrets at runtime if available)
+WORLD_BANK_API_URL = "https://api.worldbank.org/v2"
+INDIA_POVERTY_API_URL = "https://loadqa.ndapapi.com/v1/openapi"
+INDIA_POVERTY_API_KEY = "gAAAAABpg20RfAwUAEq8ibudPDW7_cLCZrmUjpOVRH0W4rwwewM09vTDi1LxAXKkpRr0DaS7GES5iu9XzDOeGk-FEpMJgIL06oZ1WTR9HCrw6cmJbJvXKVKlo3VaaCkwfSaIimDLObK9RX3kl6RmWWEF88VvEpKj5ZxO-JoQzSWp2go-_rexphfoj49OMGDEVPAG25wIMFUW"
 
 # Cache Settings
-try:
-    CACHE_TTL = int(st.secrets.get("settings", {}).get("cache_ttl", "3600"))
-except (AttributeError, FileNotFoundError, ValueError):
-    CACHE_TTL = 3600  # 1 hour in seconds
+CACHE_TTL = 3600  # 1 hour in seconds
+
+
+def get_secrets_config():
+    """
+    Get configuration from Streamlit secrets at runtime.
+    Only called after Streamlit is initialized.
+    """
+    try:
+        import streamlit as st
+        return {
+            'world_bank_api_url': st.secrets.get("api", {}).get("world_bank_api_url", WORLD_BANK_API_URL),
+            'india_poverty_api_url': st.secrets.get("api", {}).get("india_poverty_api_url", INDIA_POVERTY_API_URL),
+            'india_poverty_api_key': st.secrets.get("api", {}).get("india_poverty_api_key", INDIA_POVERTY_API_KEY),
+            'cache_ttl': int(st.secrets.get("settings", {}).get("cache_ttl", CACHE_TTL))
+        }
+    except:
+        return {
+            'world_bank_api_url': WORLD_BANK_API_URL,
+            'india_poverty_api_url': INDIA_POVERTY_API_URL,
+            'india_poverty_api_key': INDIA_POVERTY_API_KEY,
+            'cache_ttl': CACHE_TTL
+        }
 
 # Date Range
 START_YEAR = 1990
