@@ -34,7 +34,7 @@ ENV/
 *~
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
 # Reports (generated files)
 reports/generated/*.pdf
