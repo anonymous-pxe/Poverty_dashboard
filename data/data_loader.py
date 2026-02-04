@@ -5,11 +5,12 @@ Handles data fetching and caching using Streamlit's cache_data decorator.
 
 import streamlit as st
 import pandas as pd
+import numpy as np
 from typing import Optional, List
 import config
 from .wb_api import fetch_world_bank_data, get_available_countries, fetch_multiple_indicators
 from .india_poverty_api import (
-    fetch_india_poverty_data, 
+    fetch_india_poverty_data,
     get_india_states,
     fetch_india_rural_urban_comparison
 )
@@ -44,7 +45,11 @@ def load_global_data(indicator: str,
     if not data.empty and 'country' in data.columns and 'year' in data.columns and 'value' in data.columns:
         data = data.sort_values(['country', 'year'])
         data['yoy_change'] = data.groupby('country')['value'].diff()
-        data['yoy_pct_change'] = data.groupby('country')['value'].pct_change() * 100
+        # Calculate pct_change with safeguard against division by zero
+        data['yoy_pct_change'] = data.groupby('country')['value'].pct_change().replace([np.inf, -np.inf], np.nan) * 100
+        # Fill NaN values in yoy columns with 0
+        data['yoy_change'] = data['yoy_change'].fillna(0)
+        data['yoy_pct_change'] = data['yoy_pct_change'].fillna(0)
     
     return data
 
