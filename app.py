@@ -4,6 +4,8 @@ A comprehensive data analysis and visualization platform for poverty indicators.
 """
 
 import streamlit as st
+import os
+from pathlib import Path
 import config
 from components.sidebar import render_sidebar
 from pages import (
@@ -27,9 +29,11 @@ st.set_page_config(
 
 
 def load_custom_css():
-    """Load custom CSS styles."""
+    """Load custom CSS styles with proper path resolution."""
     try:
-        with open('assets/css/style.css') as f:
+        # Get absolute path to CSS file
+        css_path = Path(__file__).parent / 'assets' / 'css' / 'style.css'
+        with open(css_path, 'r', encoding='utf-8') as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
     except FileNotFoundError:
         # If CSS file not found, use inline styles
